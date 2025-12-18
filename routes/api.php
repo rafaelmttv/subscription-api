@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\PlanController;
 use App\Http\Controllers\Api\V1\UserController;
 
+// Auth routes
 Route::prefix('v1')->group(function () {
-
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
 
@@ -14,6 +15,7 @@ Route::prefix('v1')->group(function () {
 
 });
 
+// User routes
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{user}', [UserController::class, 'show']);
@@ -21,3 +23,10 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy']);
 });
 
+// Plan routes
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::get('/plans', [PlanController::class, 'index']);
+    Route::post('/plans', [PlanController::class, 'store']);
+    Route::put('/plans/{plan}', [PlanController::class, 'update']);
+    Route::delete('/plans/{plan}', [PlanController::class, 'destroy']);
+});

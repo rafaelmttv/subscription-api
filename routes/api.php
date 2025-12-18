@@ -30,3 +30,12 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::put('/plans/{plan}', [PlanController::class, 'update']);
     Route::delete('/plans/{plan}', [PlanController::class, 'destroy']);
 });
+
+// Subscription routes
+use App\Http\Controllers\Api\V1\SubscriptionController;
+
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::post('/plans/{plan}/subscribe', [SubscriptionController::class, 'store']);
+    Route::post('/subscriptions/cancel', [SubscriptionController::class, 'cancel']);
+    Route::get('/subscriptions/history', [SubscriptionController::class, 'history']);
+});

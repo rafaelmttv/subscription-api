@@ -10,6 +10,7 @@ use App\Services\PlanService;
 
 class PlanController extends Controller
 {
+
     public function __construct(
         protected PlanService $service
     ) {}

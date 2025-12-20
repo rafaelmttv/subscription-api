@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\PlanController;
 use App\Http\Controllers\Api\V1\UserController;
+use App\Http\Controllers\Api\V1\SubscriptionController;
 
 // Auth routes
 Route::prefix('v1')->group(function () {
@@ -32,10 +34,14 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
 });
 
 // Subscription routes
-use App\Http\Controllers\Api\V1\SubscriptionController;
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::post('/plans/{plan}/subscribe', [SubscriptionController::class, 'store']);
     Route::post('/subscriptions/cancel', [SubscriptionController::class, 'cancel']);
     Route::get('/subscriptions/history', [SubscriptionController::class, 'history']);
+});
+
+// Order routes
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::post('/orders', [OrderController::class, 'store']);
 });

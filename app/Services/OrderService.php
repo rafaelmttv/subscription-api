@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\OrderRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Enums\OrderStatus;
+use App\Jobs\ProcessPaymentJob;
 use Exception;
 
 class OrderService
@@ -31,10 +32,14 @@ class OrderService
             throw new Exception('Order limit exceeded for current plan');
         }
 
-        return $this->orders->create([
+        $order = $this->orders->create([
             'user_id' => $user->id,
             'amount' => $amount,
             'status' => OrderStatus::PENDING,
         ]);
+
+        ProcessPaymentJob::dispatch($order);
+
+        return $order;
     }
 }

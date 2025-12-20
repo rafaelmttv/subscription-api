@@ -17,6 +17,7 @@ class OrderController extends Controller
 
     public function store(StoreOrderRequest $request)
     {
+
         return response()->json(
             $this->orderService->create(
                 $request->user(),
